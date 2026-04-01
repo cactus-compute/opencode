@@ -25,9 +25,11 @@ import { PtyRoutes } from "./routes/pty"
 import { McpRoutes } from "./routes/mcp"
 import { FileRoutes } from "./routes/file"
 import { ConfigRoutes } from "./routes/config"
+import { VoiceRoutes } from "./routes/voice"
 import { ExperimentalRoutes } from "./routes/experimental"
 import { ProviderRoutes } from "./routes/provider"
 import { EventRoutes } from "./routes/event"
+import { TTSRoutes } from "./routes/tts"
 import { errorHandler } from "./middleware"
 import { getMimeType } from "hono/utils/mime"
 
@@ -59,6 +61,8 @@ export const InstanceRoutes = (upgrade: UpgradeWebSocket, app: Hono = new Hono()
     .route("/", EventRoutes())
     .route("/mcp", McpRoutes())
     .route("/tui", TuiRoutes())
+    .route("/voice", VoiceRoutes())
+    .route("/tts", TTSRoutes())
     .post(
       "/instance/dispose",
       describeRoute({
