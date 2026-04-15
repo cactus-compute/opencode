@@ -16,6 +16,7 @@ export const { use: useSDK, provider: SDKProvider } = createSimpleContext({
     fetch?: typeof fetch
     headers?: RequestInit["headers"]
     events?: EventSource
+    voiceTranscribe?: (base64: string) => Promise<{ status: number; body: string }>
   }) => {
     const abort = new AbortController()
     let sse: AbortController | undefined
@@ -111,6 +112,7 @@ export const { use: useSDK, provider: SDKProvider } = createSimpleContext({
       event: emitter,
       fetch: props.fetch ?? fetch,
       url: props.url,
+      voiceTranscribe: props.voiceTranscribe,
     }
   },
 })

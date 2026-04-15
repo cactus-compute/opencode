@@ -62,6 +62,16 @@ export const rpc = {
       body,
     }
   },
+  async voiceTranscribe(input: { base64: string }) {
+    const buffer = Buffer.from(input.base64, "base64")
+    const file = new File([buffer], "audio.mp3", { type: "audio/mpeg" })
+    const form = new FormData()
+    form.append("file", file)
+    const response = await Server.Default().app.fetch(
+      new Request("http://opencode.internal/voice/transcribe", { method: "POST", body: form }),
+    )
+    return { status: response.status, body: await response.text() }
+  },
   snapshot() {
     const result = writeHeapSnapshot("server.heapsnapshot")
     return result

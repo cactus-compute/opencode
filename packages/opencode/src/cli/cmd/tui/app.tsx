@@ -172,6 +172,7 @@ export function tui(input: {
   fetch?: typeof fetch
   headers?: RequestInit["headers"]
   events?: EventSource
+  voiceTranscribe?: (base64: string) => Promise<{ status: number; body: string }>
 }) {
   // promise to prevent immediate exit
   return new Promise<void>(async (resolve) => {
@@ -214,6 +215,7 @@ export function tui(input: {
                         fetch={input.fetch}
                         headers={input.headers}
                         events={input.events}
+                        voiceTranscribe={input.voiceTranscribe}
                       >
                         <ProjectProvider>
                           <SyncProvider>

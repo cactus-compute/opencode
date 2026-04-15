@@ -185,16 +185,22 @@ export const TuiThreadCommand = cmd({
         network.port !== 0 ||
         network.hostname !== "127.0.0.1"
 
+      const voiceTranscribe = async (base64: string) => {
+        return client.call("voiceTranscribe", { base64 })
+      }
+
       const transport = external
         ? {
             url: (await client.call("server", network)).url,
             fetch: undefined,
             events: undefined,
+            voiceTranscribe,
           }
         : {
             url: "http://opencode.internal",
             fetch: createWorkerFetch(client),
             events: createEventSource(client),
+            voiceTranscribe,
           }
 
       setTimeout(() => {
@@ -213,6 +219,7 @@ export const TuiThreadCommand = cmd({
           directory: cwd,
           fetch: transport.fetch,
           events: transport.events,
+          voiceTranscribe: transport.voiceTranscribe,
           args: {
             continue: args.continue,
             sessionID: args.session,
